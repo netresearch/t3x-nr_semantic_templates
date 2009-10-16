@@ -12,7 +12,7 @@
  * @link       http://www.netresearch.de
  */
 
-require_once PATH_TSLIB.'class.tslib_pibase.php';
+require_once PATH_tslib . 'class.tslib_pibase.php';
 
 
 /**
