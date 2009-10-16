@@ -1,9 +1,9 @@
 TODO
 
-* extension in svn
-
+Nice2Have:
+* validierung des user parameter feldes
+** siehe bereits existierende evaluationsklasse
+** aktivierung in ext_localconf.php
 * ausfüllen der uri / sparql[Endpoint|Query] felder mit den preview werten aus
 dem Template Repository
-
-* usersParameters hinzufügen
-
+* config felder verstecken, wenn less instanz nicht korret ist

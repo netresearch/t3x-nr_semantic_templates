@@ -15,6 +15,7 @@
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
                         <label index="tt_content.pi_semantictemplates.debugEnabled">Enable Debug Output</label>
                         <label index="tt_content.pi_semantictemplates.templateType">Data Source Type</label>
+                        <label index="tt_content.pi_semantictemplates.usersParameters">Users Parameters - name:value;</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -27,6 +28,7 @@
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
                         <label index="tt_content.pi_semantictemplates.debugEnabled">Debug Ausgaben aktivieren</label>
                         <label index="tt_content.pi_semantictemplates.templateType">Typ der Datenquelle</label>
+                        <label index="tt_content.pi_semantictemplates.usersParameters">Benutzerdefinierte Parameter - Name:Wert;</label>
 		</languageKey>
 	</data>
 </T3locallang>

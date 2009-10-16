@@ -74,6 +74,17 @@
           </config>
          </TCEforms>
         </debugEnabled>
+
+        <usersParameters>
+         <TCEforms>
+          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.usersParameters</label>
+          <config>
+            <type>input</type>
+            <size>50</size>
+            <!-- eval>tx_templates_users_parameters_validation</eval -->
+          </config>
+         </TCEforms>
+        </usersParameters>
      </el>
     </ROOT>
    </sDEF>
