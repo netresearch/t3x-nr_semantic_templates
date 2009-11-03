@@ -31,7 +31,18 @@
            </config>
            </TCEforms>
         </templateId>
-         
+
+        <templateVersion>
+          <TCEforms>
+           <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_versions</label>
+           <onChange>reload</onChange>
+           <config>
+            <type>select</type>
+             <itemsProcFunc>tx_templates_webservice->getTemplateVersions</itemsProcFunc>
+           </config>
+           </TCEforms>
+        </templateVersion>
+
         <uri>
          <TCEforms>
           <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.uri</label>
@@ -79,8 +90,8 @@
          <TCEforms>
           <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.usersParameters</label>
           <config>
-            <type>input</type>
-            <size>50</size>
+            <type>text</type>
+            <!-- size>50</size -->
             <!-- eval>tx_templates_users_parameters_validation</eval -->
           </config>
          </TCEforms>

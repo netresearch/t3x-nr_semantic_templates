@@ -61,6 +61,7 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
         }
 
         $templateIdString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateId');
+        $revision = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateVersion');
         $templateIdParts = split('@', $templateIdString);
         if (count($templateIdParts) != 2) {
             if ($debugEnabled) {
@@ -74,13 +75,13 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
 
         if ('uri' === $templateIdParts[0]) {
             $uri = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'uri');
-            $requestSpecificPart = 'uri=' . urlencode($uri);
+            $requestSpecificPart = 'requestType=uri&uri=' . urlencode($uri);
         } else if ('sparql' === $templateIdParts[0]) {
             $sparqlEndpoint 
                 = urlencode($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlEndpoint'));
             $sparqlQuery 
                 = urlencode($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlQuery'));
-            $requestSpecificPart = 'sparqlEndpoint=' . $sparqlEndpoint
+            $requestSpecificPart = 'requestType=sparql&sparqlEndpoint=' . $sparqlEndpoint
                             . '&sparqlQuery=' . $sparqlQuery;
         } else {
             if ($debugEnabled) {
@@ -121,10 +122,11 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
         }
 
         // ---------------  assemble url  ---------------
-        $requestUrl = $lessUrl .
-                'build?requestType=uri&templateId='
-                . $templateId
-                . '&' . $requestSpecificPart;
+        $requestUrl = $lessUrl . 'build?templateId=' . $templateId;
+        if ('' !== $revision) {
+            $requestUrl .= '&revision=' . $revision;
+        }
+        $requestUrl .= '&' . $requestSpecificPart;
 
         $debugEnabled = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'debugEnabled');
         if ($debugEnabled) {

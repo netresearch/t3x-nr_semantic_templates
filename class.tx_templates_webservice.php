@@ -35,29 +35,17 @@ class Tx_Templates_Webservice
      * @return array the select box options
      */
     function getTemplateNames($config)
-    {        $flexFormDataArray = t3lib_div::xml2array($config['row']['pi_flexform']);
-        $lessUrl = '';
-        if (is_array($flexFormDataArray) && ! empty($flexFormDataArray['data']['sDEF']['lDEF']['less_url']['vDEF'])) {
-            $lessUrl = $flexFormDataArray['data']['sDEF']['lDEF']['less_url']['vDEF'];
-        } 
-
-        // we need this value in case of an error to let the error message be
-        // the selected option in the select box
-        $oldTemplateValue = '';
-        if (is_array($flexFormDataArray) && ! empty($flexFormDataArray['data']['sDEF']['lDEF']['templateId']['vDEF'])) {
-            $oldTemplateValue = $flexFormDataArray['data']['sDEF']['lDEF']['templateId']['vDEF'];
-        }
+    {
+        
+        $lessUrl = $this->_getFieldFromConfig($config, 'less_url');
+        $oldTemplateValue = $this->_getFieldFromConfig($config, 'templateId');
 
         $optionList = array();
         if (filter_var($lessUrl, FILTER_VALIDATE_URL)) {
-            $urlLength = strlen($lessUrl);
-            if ('/' !== substr($lessUrl, $urlLength-1)) {
-                $lessUrl .= '/';
-            }
+            $lessUrl = $this->_appendSlash($lessUrl);
 
             // test web service response/reachability
-            $testContent = file_get_contents($lessUrl . 'service/ping');
-            if ('pong' === $testContent) {
+            if ($this->_isValidWebservice($lessUrl)) {
                 $jsonContent = file_get_contents($lessUrl . 'service/list');
                 $templatesArray = json_decode($jsonContent);
 
@@ -84,6 +72,115 @@ class Tx_Templates_Webservice
         return $config;
 
     } // -- function getTemplateNames
+
+
+    /**
+     * Gets the list of available template versions for a certain id from the
+     * webservice.
+     *
+     * @param mixed $config the typo3 config
+     * 
+     * @return mixed the config with added options for the select box
+     */
+    public function getTemplateVersions($config)
+    {
+        $templateIdString = $this->_getFieldFromConfig($config, 'templateId');
+
+        $parts = split('@', $templateIdString);
+        if (!is_array($parts) || count($parts) !== 2) {
+            return '';
+        }
+
+        $templateId = $parts[1];
+
+        $lessUrl = $this->_getFieldFromConfig($config, 'less_url');
+
+        if ('' === $templateId || '' === $lessUrl) {
+            return '';
+        }
+        
+        $versionsArray = null;
+        if (filter_var($lessUrl, FILTER_VALIDATE_URL)) {
+            $lessUrl = $this->_appendSlash($lessUrl);
+            if ($this->_isValidWebservice($lessUrl)) {
+                $jsonContent = file_get_contents(
+                    $lessUrl . 'service/template-versions?templateId=' . $templateId
+                );
+                $versionsArray = json_decode($jsonContent);
+                
+            }
+        }
+
+        $optionList = array();
+        if (is_array($versionsArray) && count($versionsArray) > 0) {
+            foreach ($versionsArray as $versionNumber) {
+                $optionList[] = array(0 => $versionNumber,  1 => $versionNumber);
+            }
+
+            $config['items'] = array_merge($config['items'], $optionList);
+            return $config;
+        }
+
+        return '';
+    } // -- function getTemplateVersions
+
+
+    /**
+     * Gets value from a certain field from the flexform.
+     *
+     * @param mixed  $config the config object
+     * @param string $field  the field name
+     * 
+     * @return the content of the field, an empty string if none found
+     */
+    private function _getFieldFromConfig($config, $field)
+    {
+        $flexFormDataArray = t3lib_div::xml2array($config['row']['pi_flexform']);
+        $templateId = '';
+        if (is_array($flexFormDataArray) && ! empty($flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'])) {
+            $templateId = $flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'];
+        }
+
+        return $templateId;
+    } // -- function getFieldFromConfig
+
+
+    /**
+     * Checks if given url ends with a slash. Appends one if not.
+     *
+     * @param string $url the url
+     * 
+     * @return string the url certainly ending with a slash
+     */
+    private function _appendSlash($url)
+    {
+        $urlLength = strlen($url);
+        if ('/' !== substr($url, $urlLength-1)) {
+            $url .= '/';
+        }
+
+        return $url;
+    } // -- function validateAppendSlash
+
+
+    /**
+     * Connects to the given less URL and checks if the webservice belongs
+     * to a LESS instance.
+     *
+     * @param strin $url the url of the webservice to test
+     * 
+     * @return boolean true if webservice response is as expected, false otherwise
+     */
+    private function _isValidWebservice($url)
+    {
+        $testContent = file_get_contents($url . 'service/ping');
+
+        if ('pong' === $testContent) {
+            return true;
+        } else {
+            return false;
+        }
+    } // -- function validateWebservice
 
 } // -- class tx_templates_webservice
 

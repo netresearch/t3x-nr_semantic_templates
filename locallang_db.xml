@@ -10,6 +10,7 @@
 			<label index="tt_content.pi_flexform.sheet_general">General Settings</label>
 			<label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instance URL</label>
                         <label index="tt_content.pi_semantictemplates.template_name">Template Name</label>
+                        <label index="tt_content.pi_semantictemplates.template_versions">Template Versions</label>
                         <label index="tt_content.pi_semantictemplates.uri">URI</label>
                         <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql Endpoint</label>
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
@@ -23,6 +24,7 @@
                         <label index="tt_content.pi_flexform.sheet_general">Allgemeine Optionen</label>
                         <label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instanz URL</label>
                         <label index="tt_content.pi_semantictemplates.template_name">Name des Templates</label>
+                        <label index="tt_content.pi_semantictemplates.template_versions">Template Versionen</label>
                         <label index="tt_content.pi_semantictemplates.uri">URI</label>
                         <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql Endpoint</label>
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
