@@ -1,28 +1,29 @@
 <?php
 /**
- * This file contains the semantic templates webservice class.
+ * Semantic Templates Typo3 extension.
  *
  * PHP version 5
  *
  * @category   Netresearch
  * @package    TYPO3
- * @subpackage Tx_Nr_Semantictemplates
- * @author     Raphael Doehring <raphael.doehring@googlemail.com>
- * @license    No license http://www.netresearch.de
+ * @subpackage nr_semantic_templates
+ * @author     Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
 
 /**
+ * This file contains the semantic templates webservice class.
  * Accommodates function to access the Semantic Templates webservice.
  *
  * @category   Netresearch
  * @package    TYPO3
- * @subpackage Tx_Nr_Semantictemplates
- * @author     Raphael Doehring <raphael.doehring@googlemail.com>
- * @license    No license http://www.netresearch.de
+ * @subpackage nr_semantic_templates
+ * @author     Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
-class Tx_Templates_Webservice
+class tx_templates_webservice
 {
 
     /**
@@ -34,7 +35,7 @@ class Tx_Templates_Webservice
      * 
      * @return array the select box options
      */
-    function getTemplateNames($config)
+    public function getTemplateNames($config)
     {
         
         $lessUrl = $this->_getFieldFromConfig($config, 'less_url');
@@ -184,8 +185,8 @@ class Tx_Templates_Webservice
 
 } // -- class tx_templates_webservice
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_sw_semantic_templates/class.tx_templates_webservice.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_sw_semantic_templates/class.tx_templates_webservice.php'];
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/class.tx_templates_webservice.php']) {
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/class.tx_templates_webservice.php'];
 }
 
 ?>

@@ -1,18 +1,18 @@
 <T3DataStructure>
  <meta>
-     <langDisable type="integer">1</langDisable>
+  <langDisable type="integer">1</langDisable>
  </meta>
  <sheets>
   <sDEF>
    <ROOT>
     <TCEforms>
-     <sheetTitle>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_flexform.sheet_general</sheetTitle>
+     <sheetTitle>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_flexform.sheet_general</sheetTitle>
     </TCEforms>
     <type>array</type>
      <el>
         <less_url>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.1_sheet_url</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.1_sheet_url</label>
           <onChange>reload</onChange>
           <config>
             <type>input</type>
@@ -23,7 +23,7 @@
 
         <templateId>
           <TCEforms>
-           <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_name</label>
+           <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_name</label>
            <onChange>reload</onChange>
            <config>
             <type>select</type>
@@ -34,7 +34,7 @@
 
         <templateVersion>
           <TCEforms>
-           <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_versions</label>
+           <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_versions</label>
            <onChange>reload</onChange>
            <config>
             <type>select</type>
@@ -45,7 +45,7 @@
 
         <uri>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.uri</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.uri</label>
           <config>
             <type>input</type>
             <size>30</size>
@@ -58,7 +58,7 @@
 
         <sparqlEndpoint>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.sparqlEndpoint</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.sparqlEndpoint</label>
           <config>
             <type>input</type>
             <size>30</size>
@@ -69,7 +69,7 @@
 
         <sparqlQuery>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.sparqlQuery</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.sparqlQuery</label>
           <config>
             <type>text</type>
           </config>
@@ -79,7 +79,7 @@
 
         <debugEnabled>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.debugEnabled</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.debugEnabled</label>
           <config>
             <type>check</type>
           </config>
@@ -88,7 +88,7 @@
 
         <usersParameters>
          <TCEforms>
-          <label>LLL:EXT:nr_sw_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.usersParameters</label>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.usersParameters</label>
           <config>
             <type>text</type>
             <!-- size>50</size -->

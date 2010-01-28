@@ -1,38 +1,36 @@
 <?php
 /**
- * This file contains fe output for the semantic templates.
+ * Semantic Templates Typo3 extension.
  *
  * PHP version 5
  *
  * @category   Netresearch
  * @package    TYPO3
- * @subpackage Tx_Nr_Semantictemplates
- * @author     Raphael Doehring <raphael.doehring@googlemail.com>
- * @license    No license http://www.netresearch.de
+ * @subpackage nr_semantic_templates
+ * @author     Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
-
 require_once PATH_tslib . 'class.tslib_pibase.php';
 
-
 /**
- * Plugin 'Semantic Templates' for the 'nr_sw_semantic_templates' extension.
+ * This file generates frontend output for the semantic templates.
  *
- * This plugin get the content of the semantic template from the web service
+ * This plugin gets the content of the semantic template from the web service
  * based on the data saved in the flexform and simply ouputs the returned string.
  *
  * @category   Netresearch
  * @package    TYPO3
- * @subpackage Tx_Nr_Semantictemplates
- * @author     Raphael Doehring <raphael.doehring@googlemail.com>
- * @license    No license http://www.netresearch.de
+ * @subpackage nr_semantic_templates
+ * @author     Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
-class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
+class tx_semantictemplates_pi1 extends tslib_pibase
 {
-    var $prefixId      = 'tx_nrswsemantictemplates_pi1';		// Same as class name
-    var $scriptRelPath = 'pi1/class.tx_nrswsemantictemplates_pi1.php';	// Path to this script relative to the extension dir.
-    var $extKey        = 'nr_sw_semantic_templates';	// The extension key.
+    var $prefixId      = 'tx_nrsemantictemplates_pi1';		// Same as class name
+    var $scriptRelPath = 'pi1/class.tx_nrsemantictemplates_pi1.php';	// Path to this script relative to the extension dir.
+    var $extKey        = 'nr_semantic_templates';	// The extension key.
     var $pi_checkCHash = true;
 
 
@@ -50,7 +48,6 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
     {
         $this->conf = $conf;
         $this->pi_setPiVarDefaults();
-        $this->pi_loadLL();
         $this->pi_initPIflexForm();
 
         // ---------------  get and check parameters  ---------------
@@ -61,11 +58,11 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
         }
 
         $templateIdString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateId');
-        $revision = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateVersion');
-        $templateIdParts = split('@', $templateIdString);
+        $revision         = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateVersion');
+        $templateIdParts  = split('@', $templateIdString);
         if (count($templateIdParts) != 2) {
             if ($debugEnabled) {
-                return 'TemplateIdString has unexpected foramt: ' . $templateIdString;
+                return 'TemplateIdString has unexpected format: ' . $templateIdString;
             }
             return '';
         }
@@ -77,15 +74,17 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
             $uri = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'uri');
             $requestSpecificPart = 'requestType=uri&uri=' . urlencode($uri);
         } else if ('sparql' === $templateIdParts[0]) {
-            $sparqlEndpoint 
-                = urlencode($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlEndpoint'));
-            $sparqlQuery 
-                = urlencode($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlQuery'));
+            $sparqlEndpoint = urlencode(
+                $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlEndpoint')
+            );
+            $sparqlQuery = urlencode(
+                $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlQuery')
+            );
             $requestSpecificPart = 'requestType=sparql&sparqlEndpoint=' . $sparqlEndpoint
-                            . '&sparqlQuery=' . $sparqlQuery;
+                . '&sparqlQuery=' . $sparqlQuery;
         } else {
             if ($debugEnabled) {
-                return 'Neither uri nor sparql type found in templateIdString: ' . $templateIdString;
+                return 'Neither URI nor sparql type found in templateIdString: ' . $templateIdString;
             }
             return '';
         }
@@ -128,7 +127,6 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
         }
         $requestUrl .= '&' . $requestSpecificPart;
 
-        $debugEnabled = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'debugEnabled');
         if ($debugEnabled) {
             $requestUrl .= '&debug=true';
         }
@@ -149,12 +147,12 @@ class Tx_Nrswsemantictemplates_Pi1 extends tslib_pibase
         return $this->pi_wrapInBaseClass($returnValue);
     } // -- function main
         
-} // -- class tx_nrswsemantictemplates_pi1
+} // -- class tx_nrsemantictemplates_pi1
 
 
 // make sure class in included
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_sw_semantic_templates/pi1/class.tx_nrswsemantictemplates_pi1.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_sw_semantic_templates/pi1/class.tx_nrswsemantictemplates_pi1.php'];
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/pi1/class.tx_nrsemantictemplates_pi1.php']) {
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/pi1/class.tx_nrsemantictemplates_pi1.php'];
 }
 
 ?>

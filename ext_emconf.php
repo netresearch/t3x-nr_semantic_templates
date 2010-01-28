@@ -1,7 +1,7 @@
 <?php
 
 ########################################################################
-# Extension Manager/Repository config file for ext: "nr_sw_semantic_templates"
+# Extension Manager/Repository config file for ext: "nr_semantic_templates"
 #
 # Auto generated 16-09-2009 13:50
 #
@@ -14,8 +14,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Semantic Template Engine Typo3 Extension',
 	'description' => '',
 	'category' => 'plugin',
-	'author' => 'Netresearch',
-	'author_email' => 'info@netresearch.de',
+	'author' => 'Raphel Doehring',
+	'author_email' => 'raphael.doehring@netresearch.de',
 	'shy' => '',
 	'dependencies' => '',
 	'conflicts' => '',
@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => '',
-	'version' => '0.0.0',
+	'version' => '0.1.0',
 	'constraints' => array(
 		'depends' => array(
 		),

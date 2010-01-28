@@ -2,7 +2,7 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'nr_sw_semantic_templates'</description>
+		<description>Language labels for database tables/fields belonging to extension 'nr_semantic_templates'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
