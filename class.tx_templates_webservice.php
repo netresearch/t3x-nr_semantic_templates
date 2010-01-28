@@ -70,6 +70,7 @@ class tx_templates_webservice
         } // -- else, URL validation failed
 
         $config['items'] = array_merge($config['items'], $optionList);
+        sort($config['items']);
         return $config;
 
     } // -- function getTemplateNames
