@@ -26,7 +26,7 @@ require_once PATH_tslib . 'class.tslib_pibase.php';
  * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
-class tx_semantictemplates_pi1 extends tslib_pibase
+class tx_nrsemantictemplates_pi1 extends tslib_pibase
 {
     var $prefixId      = 'tx_nrsemantictemplates_pi1';		// Same as class name
     var $scriptRelPath = 'pi1/class.tx_nrsemantictemplates_pi1.php';	// Path to this script relative to the extension dir.
@@ -44,7 +44,7 @@ class tx_semantictemplates_pi1 extends tslib_pibase
      * @return string The string containing the template output or an error message
      *              if debug is enabled.
      */
-    function main($content, $conf)
+    public function main($content, $conf)
     {
         $this->conf = $conf;
         $this->pi_setPiVarDefaults();
@@ -53,7 +53,7 @@ class tx_semantictemplates_pi1 extends tslib_pibase
         // ---------------  get and check parameters  ---------------
         $debugEnabledString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'debugEnabled');
         $debugEnabled = false;
-        if (1 === $debugEnabledString) {
+        if (1 == $debugEnabledString) {
             $debugEnabled = true;
         }
 
