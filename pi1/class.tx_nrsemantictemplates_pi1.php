@@ -121,7 +121,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         }
 
         // ---------------  assemble url  ---------------
-        $requestUrl = $lessUrl . 'build?templateId=' . $templateId;
+        $requestUrl = $lessUrl . 'build?id=' . $templateId;
         if ('' !== $revision) {
             $requestUrl .= '&revision=' . $revision;
         }
