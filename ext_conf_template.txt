@@ -1,0 +1,4 @@
+# cat=basic/links; type=string; label=Default LESS instance URL
+lessUrl = 
+# cat=basic/links; type=string; label=Default SPARQL endpoint URL
+sparqlEndpointUrl = 
