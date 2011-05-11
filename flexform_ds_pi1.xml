@@ -16,7 +16,7 @@
            <onChange>reload</onChange>
            <config>
             <type>select</type>
-             <itemsProcFunc>tx_templates_webservice->getTemplateNames</itemsProcFunc>
+             <itemsProcFunc>tx_nrsemantictemplates_webservice->getTemplateNames</itemsProcFunc>
            </config>
            </TCEforms>
         </templateId>
@@ -27,7 +27,7 @@
            <onChange>reload</onChange>
            <config>
             <type>select</type>
-             <itemsProcFunc>tx_templates_webservice->getTemplateVersions</itemsProcFunc>
+             <itemsProcFunc>tx_nrsemantictemplates_webservice->getTemplateVersions</itemsProcFunc>
            </config>
            </TCEforms>
         </templateVersion>

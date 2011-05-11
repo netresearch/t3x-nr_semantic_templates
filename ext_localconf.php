@@ -24,5 +24,5 @@ if (TYPO3_MODE == 'BE') {
             . ':tx_nrsemantictemplates_bepreview';
 }
 
-require_once t3lib_extMgm::extPath($_EXTKEY) . '/class.tx_templates_webservice.php';
+require_once t3lib_extMgm::extPath($_EXTKEY) . '/class.tx_nrsemantictemplates_webservice.php';
 ?>

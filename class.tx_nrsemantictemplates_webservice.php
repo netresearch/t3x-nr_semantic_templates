@@ -26,7 +26,7 @@ require_once dirname(__FILE__) . '/lib/class.tx_nrsemantictemplates_config.php';
  * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
-class tx_templates_webservice
+class tx_nrsemantictemplates_webservice
 {
     /**
      * The extension key.
@@ -192,11 +192,11 @@ class tx_templates_webservice
         } else {
             return false;
         }
-    } // -- function validateWebservice
+    }
 
-} // -- class tx_templates_webservice
+}
 
-$xfile = 'ext/nr_semantic_templates/class.tx_templates_webservice.php';
+$xfile = 'ext/nr_semantic_templates/class.tx_nrsemantictemplates_webservice.php';
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS'][$xfile]) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS'][$xfile];
 }
