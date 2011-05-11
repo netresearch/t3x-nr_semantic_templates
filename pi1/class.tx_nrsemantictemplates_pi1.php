@@ -33,6 +33,20 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
     var $extKey        = 'nr_semantic_templates';	// The extension key.
     var $pi_checkCHash = true;
 
+    /**
+     * System-wide extension configuration
+     *
+     * @var array
+     */
+    protected $extConf = null;
+
+    /**
+     * Error message to display
+     * @var string
+     */
+    protected $errorMsg = null;
+
+
 
     /**
      * Reads the necessary data from the flexform, builds the web service
@@ -49,6 +63,9 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         $this->conf = $conf;
         $this->pi_setPiVarDefaults();
         $this->pi_initPIflexForm();
+        $this->extConf = unserialize(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
+        );
 
         // ---------------  get and check parameters  ---------------
         $debugEnabledString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'debugEnabled');
@@ -59,7 +76,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
 
         $templateIdString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateId');
         $revision         = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateVersion');
-        $templateIdParts  = split('@', $templateIdString);
+        $templateIdParts  = explode('@', $templateIdString);
         if (count($templateIdParts) != 2) {
             if ($debugEnabled) {
                 return 'TemplateIdString has unexpected format: ' . $templateIdString;
@@ -95,7 +112,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
 
         // users parameters field is not empty
         if ('' !== trim($usersParametersString)) {
-            $usersParametersLines = split(';', $usersParametersString);
+            $usersParametersLines = explode(';', $usersParametersString);
             if (count($usersParametersLines) > 0) {
                 // foreach key value pair
                 foreach ($usersParametersLines as $line) {
@@ -106,18 +123,12 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             } // -- if there are more than 0 lines
         } // -- if usersParameters box is not empty
 
-        $lessUrl = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'less_url');
-        if (!filter_var($lessUrl, FILTER_VALIDATE_URL)) {
+        $lessUrl = $this->getLessUrl();
+        if ($lessUrl === false) {
             if ($debugEnabled) {
-                return 'URL to LESS instance is no valid URL: ' . $lessUrl;
+                return $this->errorMsg;
             }
             return '';
-        }
-
-        // if url doesn't end with / add it
-        $urlLength = strlen($lessUrl);
-        if ('/' !== substr($lessUrl, $urlLength-1)) {
-            $lessUrl .= '/';
         }
 
         // ---------------  assemble url  ---------------
@@ -146,6 +157,37 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         $returnValue .= file_get_contents($requestUrl);
         return $this->pi_wrapInBaseClass($returnValue);
     } // -- function main
+
+
+
+    /**
+     * Fetches the LESS instance URL and returns it.
+     *
+     * @return mixed URL as string, or boolean false when no URL was configured.
+     *
+     * @see $errorMsg
+     */
+    protected function getLessUrl()
+    {
+        $lessUrl = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'], 'less_url'
+        );
+        if ($lessUrl == '') {
+            //global config
+            $lessUrl = $this->extConf['lessUrl'];
+        }
+        if (!filter_var($lessUrl, FILTER_VALIDATE_URL)) {
+            $this->errorMsg = 'URL to LESS instance is no valid URL: ' . $lessUrl;
+            return false;
+        }
+
+        if (substr($lessUrl, -1) != '/') {
+            // if url doesn't end with / add it
+            $lessUrl .= '/';
+        }
+
+        return $lessUrl;
+    }
         
 } // -- class tx_nrsemantictemplates_pi1
 

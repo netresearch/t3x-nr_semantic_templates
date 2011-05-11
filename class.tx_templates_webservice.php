@@ -16,6 +16,8 @@
  * This file contains the semantic templates webservice class.
  * Accommodates function to access the Semantic Templates webservice.
  *
+ * Used from within the flexform configuration
+ *
  * @category   Netresearch
  * @package    TYPO3
  * @subpackage nr_semantic_templates
@@ -25,6 +27,28 @@
  */
 class tx_templates_webservice
 {
+    /**
+     * The extension key.
+     *
+     * @var string
+     */
+    public $extKey = 'nr_semantic_templates';
+
+    /**
+     * System-wide extension configuration
+     *
+     * @var array
+     */
+    protected $extConf = null;
+
+    public function __construct()
+    {
+        $this->extConf = unserialize(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
+        );
+    }
+
+
 
     /**
      * Get the names of the published templates from a LESS template repository
@@ -138,12 +162,18 @@ class tx_templates_webservice
     private function _getFieldFromConfig($config, $field)
     {
         $flexFormDataArray = t3lib_div::xml2array($config['row']['pi_flexform']);
-        $templateId = '';
-        if (is_array($flexFormDataArray) && ! empty($flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'])) {
-            $templateId = $flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'];
+        $value = '';
+        if (is_array($flexFormDataArray)
+            && ! empty($flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'])
+        ) {
+            $value = $flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'];
+        }
+        if ($value == '' && isset($this->extConf[$field])) {
+            //fall back to global configuration
+            $value = $this->extConf[$field];
         }
 
-        return $templateId;
+        return $value;
     } // -- function getFieldFromConfig
 
 
@@ -186,8 +216,8 @@ class tx_templates_webservice
 
 } // -- class tx_templates_webservice
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/class.tx_templates_webservice.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_semantic_templates/class.tx_templates_webservice.php'];
+$xfile = 'ext/nr_semantic_templates/class.tx_templates_webservice.php';
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS'][$xfile]) {
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS'][$xfile];
 }
-
 ?>
