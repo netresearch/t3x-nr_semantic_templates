@@ -1,15 +1,28 @@
 <?php
 declare(encoding = "utf-8");
 /**
+ * Semantic Templates Typo3 extension.
+ *
+ * PHP version 5
+ *
+ * @category Netresearch
+ * @package  nr_semantic_templates
+ * @author   Christian Weiske <christian.weiske@netresearch.de>
+ * @license  AGPL v3 or later http://www.gnu.org/licenses/agpl.html
+ * @link     http://www.netresearch.de/
+ */
+require_once dirname(__FILE__) . '/class.tx_nrsemantictemplates_config.php';
+
+/**
  * Backend preview
  *
  * PHP version 5
  *
- * @category   Netresearch
- * @package    nr_semantic_templates
- * @author     Christian Weiske <christian.weiske@netresearch.de>
- * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
- * @link       http://www.netresearch.de
+ * @category Netresearch
+ * @package  nr_semantic_templates
+ * @author   Christian Weiske <christian.weiske@netresearch.de>
+ * @license  AGPL v3 or later http://www.gnu.org/licenses/agpl.html
+ * @link     http://www.netresearch.de/
  */
 class tx_nrsemantictemplates_bepreview
 {
@@ -67,11 +80,23 @@ class tx_nrsemantictemplates_bepreview
      */
     protected function preview($row)
     {
-        $arFlex = t3lib_div::xml2array($row['pi_flexform']);
-        //this is hackish but fast
-        //$nCampaignId = (int)$arFlex['data']['sDEF']['lDEF']['campaign']['vDEF'];
+        $config = t3lib_div::makeInstance('tx_nrsemantictemplates_config');
+        $config->setFlexformFromRowConfig($row);
+
         //FIXME
-        return 'foo';
+        $lessUrl = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
+        $dataUrl = htmlspecialchars($config->get('uri'));
+        $content = '<strong>LESS URL:</strong> '
+            . '<a target="_blank" href="'. $lessUrl . '">' . $lessUrl . '</a><br/>';
+
+        $content .= '<strong>Template ID:</strong> '
+            . htmlspecialchars($config->get('templateId'))
+            . ' #' . htmlspecialchars($config->get('templateVersion'))
+            . '<br/>';
+        $content .= '<strong>Data URI:</strong> '
+            . '<a target="_blank" href="'. $dataUrl . '">' . $dataUrl . '</a><br/>';
+
+        return $content;
     }
 }
 
