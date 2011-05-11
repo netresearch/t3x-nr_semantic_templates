@@ -11,6 +11,7 @@
  * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
  * @link       http://www.netresearch.de
  */
+require_once dirname(__FILE__) . '/lib/class.tx_nrsemantictemplates_config.php';
 
 /**
  * This file contains the semantic templates webservice class.
@@ -35,25 +36,15 @@ class tx_templates_webservice
     public $extKey = 'nr_semantic_templates';
 
     /**
-     * Flexform configuration
+     * Configuration object
      *
-     * @var array
+     * @var tx_nrsemantictemplates_config
      */
-    public $flexConfig = null;
-
-
-    /**
-     * System-wide extension configuration
-     *
-     * @var array
-     */
-    protected $extConf = null;
+    protected $config = null;
 
     public function __construct()
     {
-        $this->extConf = unserialize(
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
-        );
+        $this->config = t3lib_div::makeInstance('tx_nrsemantictemplates_config');
     }
 
 
@@ -63,16 +54,16 @@ class tx_templates_webservice
      * web service. If an error occured it will be returned as label of the only
      * select box option.
      *
-     * @param mixed $config the flexform data
+     * @param array $config Database data, current row array under 'row' key
      *
      * @return array the select box options
      */
     public function getTemplateNames($config)
     {
-        $this->setFlexformConfig($config);
+        $this->config->setFlexformFromRowConfig($config['row']);
 
-        $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
-        $oldTemplateValue = $this->getConfigValue('templateId');
+        $lessUrl = $this->config->get('lessUrl', null, 'sBasic');
+        $oldTemplateValue = $this->config->get('templateId');
 
         $optionList = array();
         if (filter_var($lessUrl, FILTER_VALIDATE_URL)) {
@@ -123,8 +114,8 @@ class tx_templates_webservice
      */
     public function getTemplateVersions($config)
     {
-        $this->setFlexformConfig($config);
-        $templateIdString = $this->getConfigValue('templateId');
+        $this->config->setFlexformFromRowConfig($config['row']);
+        $templateIdString = $this->config->get('templateId');
 
         $parts = split('@', $templateIdString);
         if (!is_array($parts) || count($parts) !== 2) {
@@ -133,7 +124,7 @@ class tx_templates_webservice
 
         $templateId = $parts[1];
 
-        $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
+        $lessUrl = $this->config->get('lessUrl', null, 'sBasic');
 
         if ('' === $templateId || '' === $lessUrl) {
             return '';
@@ -164,46 +155,6 @@ class tx_templates_webservice
         return '';
     } // -- function getTemplateVersions
 
-
-
-    protected function setFlexformConfig($config)
-    {
-        $this->flexConfig = t3lib_div::xml2array($config['row']['pi_flexform']);
-    }
-
-
-    /**
-     * Returns a configuration value.
-     *
-     * Reads it from several sources:
-     * 1. Flexform, field "field_$strName"
-     * 2. System-wide extension settings ($this->extConf)
-     *
-     * @param string $strName      Name of configuration setting
-     *                             Example: "sitetype", without "field_" prefix
-     * @param string $strDefault   Default value to return if no value is set
-     * @param string $strFlexSheet Name of flexform sheet
-     *
-     * @return mixed Configuration value, default value if not found
-     */
-    protected function getConfigValue($strName, $strDefault = null, $sheet = 'sDEF')
-    {
-        $value = '';
-        if (is_array($this->flexConfig)
-            && ! empty($this->flexConfig['data'][$sheet]['lDEF'][$strName]['vDEF'])
-        ) {
-            return $this->flexConfig['data'][$sheet]['lDEF'][$strName]['vDEF'];
-        }
-
-        if ($value == '' && isset($this->extConf[$strName])
-            && $this->extConf[$strName] != ''
-        ) {
-            //fall back to global configuration
-            return $this->extConf[$strName];
-        }
-
-        return $strDefault;
-    } // -- function getFieldFromConfig
 
 
     /**
