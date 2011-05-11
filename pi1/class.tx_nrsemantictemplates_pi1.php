@@ -92,14 +92,14 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             $requestSpecificPart = 'requestType=uri&uri=' . urlencode($uri);
         } else if ('sparql' === $templateIdParts[0]) {
             $sparqlEndpoint = urlencode($this->getConfigValue('sparqlEndpoint'));
-            $sparqlQuery = urlencode(
-                $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlQuery')
-            );
-            $requestSpecificPart = 'requestType=sparql&sparqlEndpoint=' . $sparqlEndpoint
+            $sparqlQuery = urlencode($this->getConfigValue('sparqlQuery'));
+            $requestSpecificPart = 'requestType=sparql'
+                . '&sparqlEndpoint=' . $sparqlEndpoint
                 . '&sparqlQuery=' . $sparqlQuery;
         } else {
             if ($debugEnabled) {
-                return 'Neither URI nor sparql type found in templateIdString: ' . $templateIdString;
+                return 'Neither URI nor sparql type found in templateIdString: '
+                    . $templateIdString;
             }
             return '';
         }
