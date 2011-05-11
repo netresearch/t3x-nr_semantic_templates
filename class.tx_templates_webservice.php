@@ -35,6 +35,14 @@ class tx_templates_webservice
     public $extKey = 'nr_semantic_templates';
 
     /**
+     * Flexform configuration
+     *
+     * @var array
+     */
+    public $flexConfig = null;
+
+
+    /**
      * System-wide extension configuration
      *
      * @var array
@@ -54,16 +62,17 @@ class tx_templates_webservice
      * Get the names of the published templates from a LESS template repository
      * web service. If an error occured it will be returned as label of the only
      * select box option.
-     * 
+     *
      * @param mixed $config the flexform data
-     * 
+     *
      * @return array the select box options
      */
     public function getTemplateNames($config)
     {
-        
-        $lessUrl = $this->_getFieldFromConfig($config, 'lessUrl', 'sBasic');
-        $oldTemplateValue = $this->_getFieldFromConfig($config, 'templateId');
+        $this->setFlexformConfig($config);
+
+        $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
+        $oldTemplateValue = $this->getConfigValue('templateId');
 
         $optionList = array();
         if (filter_var($lessUrl, FILTER_VALIDATE_URL)) {
@@ -77,7 +86,7 @@ class tx_templates_webservice
                 // build select box options array
                 if (is_array($templatesArray)) {
                     foreach ($templatesArray as $currentTemplate) {
-                        
+
                         // @-thing is a hack to get the request type an the id
                         // in one select box
                         $value = $currentTemplate->requestType . '@' . $currentTemplate->id;
@@ -109,12 +118,13 @@ class tx_templates_webservice
      * webservice.
      *
      * @param mixed $config the typo3 config
-     * 
+     *
      * @return mixed the config with added options for the select box
      */
     public function getTemplateVersions($config)
     {
-        $templateIdString = $this->_getFieldFromConfig($config, 'templateId');
+        $this->setFlexformConfig($config);
+        $templateIdString = $this->getConfigValue('templateId');
 
         $parts = split('@', $templateIdString);
         if (!is_array($parts) || count($parts) !== 2) {
@@ -123,12 +133,12 @@ class tx_templates_webservice
 
         $templateId = $parts[1];
 
-        $lessUrl = $this->_getFieldFromConfig($config, 'lessUrl', 'sBasic');
+        $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
 
         if ('' === $templateId || '' === $lessUrl) {
             return '';
         }
-        
+
         $versionsArray = null;
         if (filter_var($lessUrl, FILTER_VALIDATE_URL)) {
             $lessUrl = $this->_appendSlash($lessUrl);
@@ -137,7 +147,7 @@ class tx_templates_webservice
                     $lessUrl . 'service/template-versions?templateId=' . $templateId
                 );
                 $versionsArray = json_decode($jsonContent);
-                
+
             }
         }
 
@@ -155,31 +165,44 @@ class tx_templates_webservice
     } // -- function getTemplateVersions
 
 
-    /**
-     * Gets value from a certain field from the flexform.
-     *
-     * @param mixed  $config the config object
-     * @param string $field  the field name
-     * @param string $sheet  Flexform field name
-     * 
-     * @return the content of the field, an empty string if none found
-     */
-    private function _getFieldFromConfig($config, $field, $sheet = 'sDEF')
+
+    protected function setFlexformConfig($config)
     {
-        $flexFormDataArray = t3lib_div::xml2array($config['row']['pi_flexform']);
+        $this->flexConfig = t3lib_div::xml2array($config['row']['pi_flexform']);
+    }
+
+
+    /**
+     * Returns a configuration value.
+     *
+     * Reads it from several sources:
+     * 1. Flexform, field "field_$strName"
+     * 2. System-wide extension settings ($this->extConf)
+     *
+     * @param string $strName      Name of configuration setting
+     *                             Example: "sitetype", without "field_" prefix
+     * @param string $strDefault   Default value to return if no value is set
+     * @param string $strFlexSheet Name of flexform sheet
+     *
+     * @return mixed Configuration value, default value if not found
+     */
+    protected function getConfigValue($strName, $strDefault = null, $sheet = 'sDEF')
+    {
         $value = '';
-        if (is_array($flexFormDataArray)
-            && ! empty($flexFormDataArray['data'][$sheet]['lDEF'][$field]['vDEF'])
+        if (is_array($this->flexConfig)
+            && ! empty($this->flexConfig['data'][$sheet]['lDEF'][$strName]['vDEF'])
         ) {
-            $value = $flexFormDataArray['data'][$sheet]['lDEF'][$field]['vDEF'];
+            return $this->flexConfig['data'][$sheet]['lDEF'][$strName]['vDEF'];
         }
 
-        if ($value == '' && isset($this->extConf[$field])) {
+        if ($value == '' && isset($this->extConf[$strName])
+            && $this->extConf[$strName] != ''
+        ) {
             //fall back to global configuration
-            $value = $this->extConf[$field];
+            return $this->extConf[$strName];
         }
 
-        return $value;
+        return $strDefault;
     } // -- function getFieldFromConfig
 
 
@@ -187,7 +210,7 @@ class tx_templates_webservice
      * Checks if given url ends with a slash. Appends one if not.
      *
      * @param string $url the url
-     * 
+     *
      * @return string the url certainly ending with a slash
      */
     private function _appendSlash($url)
@@ -206,7 +229,7 @@ class tx_templates_webservice
      * to a LESS instance.
      *
      * @param strin $url the url of the webservice to test
-     * 
+     *
      * @return boolean true if webservice response is as expected, false otherwise
      */
     private function _isValidWebservice($url)

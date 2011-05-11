@@ -91,9 +91,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             $uri = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'uri');
             $requestSpecificPart = 'requestType=uri&uri=' . urlencode($uri);
         } else if ('sparql' === $templateIdParts[0]) {
-            $sparqlEndpoint = urlencode(
-                $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlEndpoint')
-            );
+            $sparqlEndpoint = urlencode($this->getConfigValue('sparqlEndpoint'));
             $sparqlQuery = urlencode(
                 $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'sparqlQuery')
             );
@@ -169,13 +167,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
      */
     protected function getLessUrl()
     {
-        $lessUrl = $this->pi_getFFvalue(
-            $this->cObj->data['pi_flexform'], 'lessUrl', 'sBasic'
-        );
-        if ($lessUrl == '') {
-            //global config
-            $lessUrl = $this->extConf['lessUrl'];
-        }
+        $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
         if (!filter_var($lessUrl, FILTER_VALIDATE_URL)) {
             $this->errorMsg = 'URL to LESS instance is no valid URL: ' . $lessUrl;
             return false;
@@ -188,7 +180,44 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
 
         return $lessUrl;
     }
-        
+
+
+    /**
+     * Returns a configuration value.
+     *
+     * Reads it from several sources:
+     * 1. Flexform, field "field_$strName"
+     * 2. System-wide extension settings ($this->extConf)
+     *
+     * @param string $strName      Name of configuration setting
+     *                             Example: "sitetype", without "field_" prefix
+     * @param string $strDefault   Default value to return if no value is set
+     * @param string $strFlexSheet Name of flexform sheet
+     *
+     * @return mixed Configuration value, default value if not found
+     */
+    protected function getConfigValue(
+        $strName, $strDefault = null, $strFlexSheet = 'sDEF'
+    ) {
+        $strValue = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'],
+            $strName, $strFlexSheet
+        );
+
+        if ($strValue != '') {
+            return $strValue;
+        }
+
+        //system-wide extension settings
+        if (isset($this->extConf[$strName])
+            && $this->extConf[$strName] != ''
+        ) {
+            return $this->extConf[$strName];
+        }
+
+        return $strDefault;
+    }
+
 } // -- class tx_nrsemantictemplates_pi1
 
 
