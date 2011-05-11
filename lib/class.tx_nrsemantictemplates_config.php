@@ -80,10 +80,10 @@ class tx_nrsemantictemplates_config
      * 1. Flexform, field "field_$strName"
      * 2. System-wide extension settings ($this->extConf)
      *
-     * @param string $strName      Name of configuration setting
-     *                             Example: "sitetype", without "field_" prefix
-     * @param string $strDefault   Default value to return if no value is set
-     * @param string $strFlexSheet Name of flexform sheet
+     * @param string $strName    Name of configuration setting
+     *                           Example: "sitetype", without "field_" prefix
+     * @param string $strDefault Default value to return if no value is set
+     * @param string $sheet      Name of flexform sheet
      *
      * @return mixed Configuration value, default value if not found
      */
