@@ -170,7 +170,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
     protected function getLessUrl()
     {
         $lessUrl = $this->pi_getFFvalue(
-            $this->cObj->data['pi_flexform'], 'less_url'
+            $this->cObj->data['pi_flexform'], 'lessUrl', 'sBasic'
         );
         if ($lessUrl == '') {
             //global config

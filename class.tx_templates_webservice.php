@@ -62,7 +62,7 @@ class tx_templates_webservice
     public function getTemplateNames($config)
     {
         
-        $lessUrl = $this->_getFieldFromConfig($config, 'less_url');
+        $lessUrl = $this->_getFieldFromConfig($config, 'lessUrl', 'sBasic');
         $oldTemplateValue = $this->_getFieldFromConfig($config, 'templateId');
 
         $optionList = array();
@@ -90,8 +90,12 @@ class tx_templates_webservice
                 $optionList[] = array(0 => 'ERROR: Server not reachable or not a LESS instance.',  1 => $oldTemplateValue);
             } // -- else, web service response is not as expected
         } else {
-            $optionList[] = array(0 => 'ERROR: URL is not valid.',  1 => $oldTemplateValue);
-        } // -- else, URL validation failed
+            //URL validation failed
+            $optionList[] = array(
+                0 => 'ERROR: URL is not valid.',
+                1 => $oldTemplateValue
+            );
+        }
 
         $config['items'] = array_merge($config['items'], $optionList);
         sort($config['items']);
@@ -119,7 +123,7 @@ class tx_templates_webservice
 
         $templateId = $parts[1];
 
-        $lessUrl = $this->_getFieldFromConfig($config, 'less_url');
+        $lessUrl = $this->_getFieldFromConfig($config, 'lessUrl', 'sBasic');
 
         if ('' === $templateId || '' === $lessUrl) {
             return '';
@@ -156,18 +160,20 @@ class tx_templates_webservice
      *
      * @param mixed  $config the config object
      * @param string $field  the field name
+     * @param string $sheet  Flexform field name
      * 
      * @return the content of the field, an empty string if none found
      */
-    private function _getFieldFromConfig($config, $field)
+    private function _getFieldFromConfig($config, $field, $sheet = 'sDEF')
     {
         $flexFormDataArray = t3lib_div::xml2array($config['row']['pi_flexform']);
         $value = '';
         if (is_array($flexFormDataArray)
-            && ! empty($flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'])
+            && ! empty($flexFormDataArray['data'][$sheet]['lDEF'][$field]['vDEF'])
         ) {
-            $value = $flexFormDataArray['data']['sDEF']['lDEF'][$field]['vDEF'];
+            $value = $flexFormDataArray['data'][$sheet]['lDEF'][$field]['vDEF'];
         }
+
         if ($value == '' && isset($this->extConf[$field])) {
             //fall back to global configuration
             $value = $this->extConf[$field];

@@ -10,17 +10,6 @@
     </TCEforms>
     <type>array</type>
      <el>
-        <lessUrl>
-         <TCEforms>
-          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.1_sheet_url</label>
-          <onChange>reload</onChange>
-          <config>
-            <type>input</type>
-            <size>30</size>
-          </config>
-         </TCEforms>
-        </lessUrl>
-
         <templateId>
           <TCEforms>
            <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_name</label>
@@ -99,5 +88,26 @@
      </el>
     </ROOT>
    </sDEF>
-  </sheets>
+
+  <sBasic>
+   <ROOT>
+    <TCEforms>
+     <sheetTitle>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_flexform.sheet_basic</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+     <el>
+        <lessUrl>
+         <TCEforms>
+          <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.1_sheet_url</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>input</type>
+            <size>30</size>
+          </config>
+         </TCEforms>
+        </lessUrl>
+     </el>
+   </ROOT>
+  </sBasic>
+ </sheets>
 </T3DataStructure>

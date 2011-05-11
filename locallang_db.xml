@@ -8,10 +8,11 @@
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_pi1">Semantic Templates</label>
 			<label index="tt_content.pi_flexform.sheet_general">General Settings</label>
+			<label index="tt_content.pi_flexform.sheet_basic">Basic settings</label>
 			<label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instance URL</label>
                         <label index="tt_content.pi_semantictemplates.template_name">Template name</label>
                         <label index="tt_content.pi_semantictemplates.template_versions">Template version</label>
-                        <label index="tt_content.pi_semantictemplates.uri">URI</label>
+                        <label index="tt_content.pi_semantictemplates.uri">Data URI</label>
                         <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql endpoint</label>
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql query</label>
                         <label index="tt_content.pi_semantictemplates.debugEnabled">Enable debug output</label>
@@ -22,10 +23,11 @@
 		<languageKey index="de" type="array">
 			<label index="tt_content.list_type_pi1">Semantische Templates</label>
                         <label index="tt_content.pi_flexform.sheet_general">Allgemeine Optionen</label>
+			<label index="tt_content.pi_flexform.sheet_basic">Grundeinstellungen</label>
                         <label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instanz URL</label>
                         <label index="tt_content.pi_semantictemplates.template_name">Name des Templates</label>
                         <label index="tt_content.pi_semantictemplates.template_versions">Templateversion</label>
-                        <label index="tt_content.pi_semantictemplates.uri">URI</label>
+                        <label index="tt_content.pi_semantictemplates.uri">Daten-URI</label>
                         <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql Endpoint</label>
                         <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
                         <label index="tt_content.pi_semantictemplates.debugEnabled">Debugausgaben aktivieren</label>
