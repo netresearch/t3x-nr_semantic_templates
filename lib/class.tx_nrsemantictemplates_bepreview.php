@@ -86,15 +86,31 @@ class tx_nrsemantictemplates_bepreview
         //FIXME
         $lessUrl = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
         $dataUrl = htmlspecialchars($config->get('uri'));
+        $template = htmlspecialchars($config->get('templateId'));
+        $sparqlEndpoint = htmlspecialchars($config->get('sparqlEndpoint'));
+        $sparqlQuery = htmlspecialchars($config->get('sparqlQuery'));
+        $lessUrl = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
+
         $content = '<strong>LESS URL:</strong> '
             . '<a target="_blank" href="'. $lessUrl . '">' . $lessUrl . '</a><br/>';
 
         $content .= '<strong>Template ID:</strong> '
-            . htmlspecialchars($config->get('templateId'))
+            . htmlspecialchars($template)
             . ' #' . htmlspecialchars($config->get('templateVersion'))
             . '<br/>';
-        $content .= '<strong>Data URI:</strong> '
-            . '<a target="_blank" href="'. $dataUrl . '">' . $dataUrl . '</a><br/>';
+
+        if (substr($template, 0, 4) == 'uri@') {
+            //URI
+            $content .= '<strong>Data URI:</strong> '
+                . '<a target="_blank" href="'. $dataUrl . '">' . $dataUrl . '</a><br/>';
+        } else {
+            //SPARQL
+            $content .= '<strong>SPARQL endpoint:</strong> '
+                . '<a target="_blank" href="'. $sparqlEndpoint . '">'
+                . $sparqlEndpoint . '</a><br/>';
+            $content .= '<strong>SPARQL query:</strong> '
+                . $sparqlQuery . '<br/>';
+        }
 
         return $content;
     }
