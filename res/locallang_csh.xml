@@ -14,6 +14,22 @@
       <label index="templateId.alttitle">LESS HTML template to show</label>
       <label index="templateId.description">The list of templates is automatically fetched from the LESS instance you configured (either system-wide or in the "Basic settings" tab).</label>
 
+      <label index="templateVersion.alttitle">Published version of the template</label>
+      <label index="templateVersion.description">A template may be changed several times. You can stick to a certain version if you know it works for you.</label>
+
+      <label index="uri.alttitle">URL with the RDF data</label>
+      <label index="uri.description">The selected template will be filled with data from this URL</label>
+
+      <label index="sparqlEndpoint.alttitle">URL of the SPARQL service</label>
+      <label index="sparqlEndpoint.description">If left empty, the configured global SPARQL endpoint URL will be used.</label>
+
+      <label index="usersParameters.alttitle">Additional data for the template</label>
+      <label index="usersParameters.description">You may pass additional data to the template. They will be treated as if the were from the RDF file/SPARQL result</label>
+      <label index="usersParameters.syntax">Each parameter-value pair is on a line of its own. Name and value are separated with a colon ":" from each other, i.e.
+name:value</label>
+
+      <label index="lessUrl.alttitle">URL of your LESS installation.</label>
+      <label index="lessUrl.description">If you do not have one, try http://less.aksw.org/. When not given, the configured global LESS URL will be used.</label>
 
 <!--
       <label index="yourField.alttitle">alternative title</label>
