@@ -79,24 +79,37 @@ class tx_nrsemantictemplates_bepreview
      * @return string rendered preview html
      */
     protected function preview($row)
+
     {
         $config = t3lib_div::makeInstance('tx_nrsemantictemplates_config');
         $config->setFlexformFromRowConfig($row);
 
-        //FIXME
-        $lessUrl = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
-        $dataUrl = htmlspecialchars($config->get('uri'));
-        $template = htmlspecialchars($config->get('templateId'));
+        $lessUrl        = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
+        $dataUrl        = htmlspecialchars($config->get('uri'));
+        $template       = htmlspecialchars($config->get('templateId'));
+        $version        = htmlspecialchars($config->get('templateVersion'));
         $sparqlEndpoint = htmlspecialchars($config->get('sparqlEndpoint'));
-        $sparqlQuery = htmlspecialchars($config->get('sparqlQuery'));
-        $lessUrl = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
+        $sparqlQuery    = htmlspecialchars($config->get('sparqlQuery'));
+        $lessUrl        = htmlspecialchars($config->get('lessUrl', null, 'sBasic'));
 
-        $content = '<strong>LESS URL:</strong> '
+        $content = '';
+        if ($config->get('debugEnabled')) {
+            $content .= '<div style="background-color: #FAA; text-align: center">'
+                . 'Debugging is enabled'
+                . '</div>';
+        }
+
+        $content .= '<strong>LESS URL:</strong> '
             . '<a target="_blank" href="'. $lessUrl . '">' . $lessUrl . '</a><br/>';
 
+        if ($version == '*') {
+            $version = 'latest';
+        } else if ($version == '**') {
+            $version = 'latest unpublished';
+        }
         $content .= '<strong>Template ID:</strong> '
             . htmlspecialchars($template)
-            . ' #' . htmlspecialchars($config->get('templateVersion'))
+            . ' #' . $version
             . '<br/>';
 
         if (substr($template, 0, 4) == 'uri@') {
