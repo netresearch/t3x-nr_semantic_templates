@@ -70,7 +70,7 @@ class tx_nrsemantictemplates_webservice
             $config['items'],
             array(
                 array(
-                    0 => $errorMsg,
+                    0 => 'ERROR: ' . $errorMsg,
                     1 => $oldValue
                 )
             )
@@ -99,7 +99,7 @@ class tx_nrsemantictemplates_webservice
 
         if (!filter_var($lessUrl, FILTER_VALIDATE_URL)) {
             return $this->returnErrorInSelect(
-                'ERROR: URL is not valid.', $oldTemplateValue, $config
+                'Invalid LESS URL.', $oldTemplateValue, $config
             );
         }
 
@@ -107,7 +107,7 @@ class tx_nrsemantictemplates_webservice
         // test web service response/reachability
         if (!$this->isValidWebservice($lessUrl)) {
             return $this->returnErrorInSelect(
-                'ERROR: Server not reachable or not a LESS instance.',
+                'Server not reachable or not a LESS instance.',
                 $oldTemplateValue, $config
             );
         }
@@ -118,7 +118,7 @@ class tx_nrsemantictemplates_webservice
         // build select box options array
         if (!is_array($templatesArray)) {
             return $this->returnErrorInSelect(
-                'ERROR: Got no data from web serivce.',
+                'Got no data from web serivce.',
                 $oldTemplateValue, $config
             );
         }
@@ -177,7 +177,7 @@ class tx_nrsemantictemplates_webservice
         $lessUrl = $this->_appendSlash($lessUrl);
         if (!$this->isValidWebservice($lessUrl)) {
             return $this->returnErrorInSelect(
-                'ERROR: Server not reachable or not a LESS instance.',
+                'Server not reachable or not a LESS instance.',
                 $oldTemplateValue, $config
             );
         }
@@ -188,7 +188,7 @@ class tx_nrsemantictemplates_webservice
         $versionsArray = json_decode($jsonContent);
         if (!is_array($versionsArray)) {
             return $this->returnErrorInSelect(
-                'ERROR: Got no data from web serivce.',
+                'Got no data from web serivce.',
                 $oldTemplateValue, $config
             );
         }
@@ -199,6 +199,7 @@ class tx_nrsemantictemplates_webservice
                 $optionList[] = array(0 => $versionNumber,  1 => $versionNumber);
             }
         }
+
 
         $config['items'] = array_merge($config['items'], $optionList);
         return $config;
