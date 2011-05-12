@@ -1,15 +1,15 @@
 <?php
+declare(encoding = 'utf-8');
 /**
  * Semantic Templates Typo3 extension.
  *
  * PHP version 5
  *
- * @category   Netresearch
- * @package    TYPO3
- * @subpackage nr_semantic_templates
- * @author     Raphael Doehring <raphael.doehring@netresearch.de>
- * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
- * @link       http://www.netresearch.de
+ * @category Netresearch
+ * @package  nr_semantic_templates
+ * @author   Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license  AGPL v3 or later http://www.gnu.org/licenses/agpl.html
+ * @link     http://www.netresearch.de/
  */
 require_once PATH_tslib . 'class.tslib_pibase.php';
 
@@ -19,19 +19,39 @@ require_once PATH_tslib . 'class.tslib_pibase.php';
  * This plugin gets the content of the semantic template from the web service
  * based on the data saved in the flexform and simply ouputs the returned string.
  *
- * @category   Netresearch
- * @package    TYPO3
- * @subpackage nr_semantic_templates
- * @author     Raphael Doehring <raphael.doehring@netresearch.de>
- * @license    AGPL v3 or later http://www.gnu.org/licenses/agpl.html
- * @link       http://www.netresearch.de
+ * @category Netresearch
+ * @package  nr_semantic_templates
+ * @author   Raphael Doehring <raphael.doehring@netresearch.de>
+ * @license  AGPL v3 or later http://www.gnu.org/licenses/agpl.html
+ * @link     http://www.netresearch.de/
  */
 class tx_nrsemantictemplates_pi1 extends tslib_pibase
 {
-    var $prefixId      = 'tx_nrsemantictemplates_pi1';		// Same as class name
-    var $scriptRelPath = 'pi1/class.tx_nrsemantictemplates_pi1.php';	// Path to this script relative to the extension dir.
-    var $extKey        = 'nr_semantic_templates';	// The extension key.
-    var $pi_checkCHash = true;
+    /**
+     * Same as class name
+     *
+     * @var string
+     */
+    public $prefixId = 'tx_nrsemantictemplates_pi1';
+
+    /**
+     * Path to this script relative to extension dir
+     *
+     * @var string
+     */
+    public $scriptRelPath = 'pi1/class.tx_nrsemantictemplates_pi1.php';
+
+    /**
+     * Extension key
+     *
+     * @var string
+     */
+    public $extKey = 'nr_semantic_templates';
+
+    /**
+     * Enable caching
+     */
+    public $pi_checkCHash = true;
 
     /**
      * System-wide extension configuration
@@ -68,18 +88,25 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         );
 
         // ---------------  get and check parameters  ---------------
-        $debugEnabledString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'debugEnabled');
+        $debugEnabledString = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'], 'debugEnabled'
+        );
         $debugEnabled = false;
         if (1 == $debugEnabledString) {
             $debugEnabled = true;
         }
 
-        $templateIdString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateId');
-        $revision         = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'templateVersion');
+        $templateIdString = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'], 'templateId'
+        );
+        $revision         = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'], 'templateVersion'
+        );
         $templateIdParts  = explode('@', $templateIdString);
         if (count($templateIdParts) != 2) {
             if ($debugEnabled) {
-                return 'TemplateIdString has unexpected format: ' . $templateIdString;
+                return 'TemplateIdString has unexpected format: '
+                    . $templateIdString;
             }
             return '';
         }
@@ -104,7 +131,9 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             return '';
         }
 
-        $usersParametersString = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'usersParameters');
+        $usersParametersString = $this->pi_getFFvalue(
+            $this->cObj->data['pi_flexform'], 'usersParameters'
+        );
         // array holding the parsed parameters in the end
         $usersParameters = array();
 
@@ -115,7 +144,9 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
                 // foreach key value pair
                 foreach ($usersParametersLines as $line) {
                     if (preg_match('/(.*[^\\\]):(.*)/', $line, $matches)) {
-                        $usersParameters[trim($matches[1])] = trim(stripslashes($matches[2]));
+                        $usersParameters[trim($matches[1])] = trim(
+                            stripslashes($matches[2])
+                        );
                     } // -- if its a match
                 } // -- foreach userParameters line
             } // -- if there are more than 0 lines
