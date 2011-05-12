@@ -87,15 +87,62 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
         );
 
-        // ---------------  get and check parameters  ---------------
-        $debugEnabledString = $this->pi_getFFvalue(
+        $dbgmsgs = array();
+        $debug   = (bool) $this->pi_getFFvalue(
             $this->cObj->data['pi_flexform'], 'debugEnabled'
         );
-        $debugEnabled = false;
-        if (1 == $debugEnabledString) {
-            $debugEnabled = true;
+
+        $requestUrl = null;
+        try {
+            $requestUrl = $this->buildUrl($debug);
+            if ($debug) {
+                $dbgmsgs[]  = '<b>Request URL</b>: <a href="'
+                    . htmlspecialchars($requestUrl) . '">'
+                    . htmlspecialchars($requestUrl) . '</a>';
+            }
+        } catch (Exception $e) {
+            $dbgmsgs[] = '<b>Error</b>: ' . $e->getMessage();
         }
 
+        if ($requestUrl !== null) {
+            $content = file_get_contents($requestUrl);
+            if ($debug) {
+                $dbgmsgs[] = sprintf(
+                    '<b>Content Length</b>: %d bytes', strlen($content)
+                );
+                $dbgmsgs[] = '<b>HTTP response headers</b>:';
+                $dbgmsgs[] = implode('<br/>  ', $http_response_header);
+            }
+        }
+
+        $returnValue = '';
+        if ($debug && count($dbgmsgs)) {
+            $returnValue .= '<div style="'
+                . 'background-color: #FDD;'
+                . 'margin: 5px 0px;'
+                . 'padding: 3px;'
+                . 'border-top: 1px solid grey; border-bottom: 1px solid grey'
+                . '">'
+                . implode('<br/>', $dbgmsgs)
+                . '</div>';
+        }
+        $returnValue .= $content;
+        return $this->pi_wrapInBaseClass($returnValue);
+    }
+
+
+
+    /**
+     * Builds the URL to request the rendered template from
+     *
+     * @param boolean $debug If debugging shall be enabled
+     *
+     * @return string URL
+     *
+     * @throws Exception When some error occurs, i.e. invalid parameters
+     */
+    protected function buildUrl($debug = false)
+    {
         $templateIdString = $this->pi_getFFvalue(
             $this->cObj->data['pi_flexform'], 'templateId'
         );
@@ -104,11 +151,10 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         );
         $templateIdParts  = explode('@', $templateIdString);
         if (count($templateIdParts) != 2) {
-            if ($debugEnabled) {
-                return 'TemplateIdString has unexpected format: '
-                    . $templateIdString;
-            }
-            return '';
+            throw new Exception(
+                'TemplateIdString has unexpected format: '
+                . $templateIdString
+            );
         }
         $templateId = $templateIdParts[1];
 
@@ -119,16 +165,15 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
             $requestSpecificPart = 'requestType=uri&uri=' . urlencode($uri);
         } else if ('sparql' === $templateIdParts[0]) {
             $sparqlEndpoint = urlencode($this->getConfigValue('sparqlEndpoint'));
-            $sparqlQuery = urlencode($this->getConfigValue('sparqlQuery'));
+            $sparqlQuery    = urlencode($this->getConfigValue('sparqlQuery'));
             $requestSpecificPart = 'requestType=sparql'
                 . '&sparqlEndpoint=' . $sparqlEndpoint
                 . '&sparqlQuery=' . $sparqlQuery;
         } else {
-            if ($debugEnabled) {
-                return 'Neither URI nor sparql type found in templateIdString: '
-                    . $templateIdString;
-            }
-            return '';
+            throw new Excption(
+                'Neither URI nor sparql type found in templateIdString: '
+                . $templateIdString
+            );
         }
 
         $usersParametersString = $this->pi_getFFvalue(
@@ -153,12 +198,6 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         } // -- if usersParameters box is not empty
 
         $lessUrl = $this->getLessUrl();
-        if ($lessUrl === false) {
-            if ($debugEnabled) {
-                return $this->errorMsg;
-            }
-            return '';
-        }
 
         // ---------------  assemble url  ---------------
         $requestUrl = $lessUrl . 'build?id=' . $templateId;
@@ -167,41 +206,36 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         }
         $requestUrl .= '&' . $requestSpecificPart;
 
-        if ($debugEnabled) {
+        if ($debug) {
             $requestUrl .= '&debug=true';
         }
 
         if (count($usersParameters) > 0) {
             foreach ($usersParameters as $key => $value) {
-                $requestUrl .= '&parameter_' . $key . '=' . urlencode($value);
-            } // -- foreach parameter
-        } // -- if there are users parameters, append them to url
-
-        $returnValue = '';
-        if ($debugEnabled) {
-            $returnValue = 'url: ' . $requestUrl . '<br />';
+                $requestUrl .= '&parameter_' . urlencode($key)
+                    . '=' . urlencode($value);
+            }
         }
 
-        // get content
-        $returnValue .= file_get_contents($requestUrl);
-        return $this->pi_wrapInBaseClass($returnValue);
-    } // -- function main
+        return $requestUrl;
+    }
 
 
 
     /**
      * Fetches the LESS instance URL and returns it.
      *
-     * @return mixed URL as string, or boolean false when no URL was configured.
+     * @return mixed URL as string
      *
-     * @see $errorMsg
+     * @throws Exception When the URL is invalid
      */
     protected function getLessUrl()
     {
         $lessUrl = $this->getConfigValue('lessUrl', null, 'sBasic');
         if (!filter_var($lessUrl, FILTER_VALIDATE_URL)) {
-            $this->errorMsg = 'URL to LESS instance is no valid URL: ' . $lessUrl;
-            return false;
+            throw new Exception(
+                'URL to LESS instance is no valid URL: ' . $lessUrl
+            );
         }
 
         if (substr($lessUrl, -1) != '/') {
