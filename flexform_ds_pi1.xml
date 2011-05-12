@@ -26,7 +26,6 @@
         <templateVersion>
           <TCEforms>
            <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_versions</label>
-           <onChange>reload</onChange>
            <config>
             <type>select</type>
              <itemsProcFunc>tx_nrsemantictemplates_webservice->getTemplateVersions</itemsProcFunc>
