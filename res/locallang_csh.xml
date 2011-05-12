@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <description>CSH labels for FlexForm fields</description>
+    <type>CSH</type>
+    <csh_table></csh_table>
+    <fileId>EXT:nr_semantic_templates/res/locallang_csh.xml</fileId>
+    <labelContext type="array"></labelContext>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index=".alttitle">Options for Semantic Templates</label>
+
+      <label index="templateId.alttitle">LESS HTML template to show</label>
+      <label index="templateId.description">The list of templates is automatically fetched from the LESS instance you configured (either system-wide or in the "Basic settings" tab).</label>
+
+
+<!--
+      <label index="yourField.alttitle">alternative title</label>
+      <label index="yourField.description">description</label>
+      <label index="yourField.details">details</label>
+      <label index="yourField.syntax">syntax</label>
+      <label index="yourField.image_descr">image caption</label>
+      <label index="yourField.image">gfx/i/pages.gif</label>
+      <label index="yourField.seeAlso">pages:starttime</label>
+-->
+    </languageKey>
+  </data>
+</T3locallang>

@@ -7,6 +7,8 @@
    <ROOT>
     <TCEforms>
      <sheetTitle>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_flexform.sheet_general</sheetTitle>
+     <!-- BC only, not needed anymore since TYPO3 4.5 -->
+     <cshFile>LLL:EXT:nr_semantic_templates/res/locallang_csh.xml</cshFile>
     </TCEforms>
     <type>array</type>
      <el>
@@ -93,6 +95,8 @@
    <ROOT>
     <TCEforms>
      <sheetTitle>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_flexform.sheet_basic</sheetTitle>
+     <!-- BC only, not needed anymore since TYPO3 4.5 -->
+     <cshFile>LLL:EXT:nr_semantic_templates/res/locallang_csh.xml</cshFile>
     </TCEforms>
     <type>array</type>
      <el>
