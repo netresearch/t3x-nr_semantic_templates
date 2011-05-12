@@ -24,4 +24,10 @@ t3lib_extMgm::addPiFlexFormValue(
     'FILE:EXT:' . $_EXTKEY . '/flexform_ds_pi1.xml'
 );
 
+if (TYPO3_MODE == 'BE') {
+    $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']
+        ['tx_nrsemantictemplates_wizicon'] = t3lib_extMgm::extPath($_EXTKEY)
+        . 'lib/class.tx_nrsemantictemplates_wizicon.php';
+}
+
 ?>

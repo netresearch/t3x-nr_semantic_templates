@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
-	<meta type="array">
-		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'nr_semantic_templates'</description>
-	</meta>
-	<data type="array">
-		<languageKey index="default" type="array">
-			<label index="tt_content.list_type_pi1">Semantic Templates</label>
-			<label index="tt_content.pi_flexform.sheet_general">General Settings</label>
-			<label index="tt_content.pi_flexform.sheet_basic">Basic settings</label>
-			<label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instance URL</label>
-                        <label index="tt_content.pi_semantictemplates.template_name">Template name</label>
-                        <label index="tt_content.pi_semantictemplates.template_versions">Template version</label>
-                        <label index="tt_content.pi_semantictemplates.uri">Data URI</label>
-                        <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql endpoint</label>
-                        <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql query</label>
-                        <label index="tt_content.pi_semantictemplates.debugEnabled">Enable debug output</label>
-                        <label index="tt_content.pi_semantictemplates.templateType">Data source type</label>
-                        <label index="tt_content.pi_semantictemplates.usersParameters">User parameters - name:value;</label>
+ <meta type="array">
+  <type>database</type>
+  <description>Language labels for database tables/fields belonging to extension 'nr_semantic_templates'</description>
+ </meta>
+ <data type="array">
+  <languageKey index="default" type="array">
+    <label index="tt_content.list_type_pi1">Semantic Template</label>
+    <label index="tt_content.wiz_description_pi1">Embed a HTML template from a LESS instance</label>
+    <label index="tt_content.pi_flexform.sheet_general">General Settings</label>
+    <label index="tt_content.pi_flexform.sheet_basic">Basic settings</label>
+    <label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instance URL</label>
+    <label index="tt_content.pi_semantictemplates.template_name">Template name</label>
+    <label index="tt_content.pi_semantictemplates.template_versions">Template version</label>
+    <label index="tt_content.pi_semantictemplates.uri">Data URI</label>
+    <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql endpoint</label>
+    <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql query</label>
+    <label index="tt_content.pi_semantictemplates.debugEnabled">Enable debug output</label>
+    <label index="tt_content.pi_semantictemplates.templateType">Data source type</label>
+    <label index="tt_content.pi_semantictemplates.usersParameters">User parameters - name:value;</label>
+  </languageKey>
 
-		</languageKey>
-		<languageKey index="de" type="array">
-			<label index="tt_content.list_type_pi1">Semantische Templates</label>
-                        <label index="tt_content.pi_flexform.sheet_general">Allgemeine Optionen</label>
-			<label index="tt_content.pi_flexform.sheet_basic">Grundeinstellungen</label>
-                        <label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instanz URL</label>
-                        <label index="tt_content.pi_semantictemplates.template_name">Name des Templates</label>
-                        <label index="tt_content.pi_semantictemplates.template_versions">Templateversion</label>
-                        <label index="tt_content.pi_semantictemplates.uri">Daten-URI</label>
-                        <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql Endpoint</label>
-                        <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
-                        <label index="tt_content.pi_semantictemplates.debugEnabled">Debugausgaben aktivieren</label>
-                        <label index="tt_content.pi_semantictemplates.templateType">Typ der Datenquelle</label>
-                        <label index="tt_content.pi_semantictemplates.usersParameters">Benutzerdefinierte Parameter - name:wert;</label>
-		</languageKey>
-	</data>
+  <languageKey index="de" type="array">
+    <label index="tt_content.list_type_pi1">Semantisches Template</label>
+    <label index="tt_content.wiz_description_pi1">HTML-Vorlage einer LESS-Instanz einbetten</label>
+        <label index="tt_content.pi_flexform.sheet_general">Allgemeine Optionen</label>
+    <label index="tt_content.pi_flexform.sheet_basic">Grundeinstellungen</label>
+    <label index="tt_content.pi_semantictemplates.1_sheet_url">LeSS Instanz URL</label>
+    <label index="tt_content.pi_semantictemplates.template_name">Name des Templates</label>
+    <label index="tt_content.pi_semantictemplates.template_versions">Templateversion</label>
+    <label index="tt_content.pi_semantictemplates.uri">Daten-URI</label>
+    <label index="tt_content.pi_semantictemplates.sparqlEndpoint">Sparql Endpoint</label>
+    <label index="tt_content.pi_semantictemplates.sparqlQuery">Sparql Query</label>
+    <label index="tt_content.pi_semantictemplates.debugEnabled">Debugausgaben aktivieren</label>
+    <label index="tt_content.pi_semantictemplates.templateType">Typ der Datenquelle</label>
+    <label index="tt_content.pi_semantictemplates.usersParameters">Benutzerdefinierte Parameter - name:wert;</label>
+  </languageKey>
+
+ </data>
 </T3locallang>
