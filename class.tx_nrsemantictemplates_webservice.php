@@ -193,7 +193,16 @@ class tx_nrsemantictemplates_webservice
             );
         }
 
-        $optionList  = array();
+        $optionList  = array(
+            array(
+                0 => 'Latest version',
+                1 => '*'
+            ),
+            array(
+                0 => 'Latest version (unpublished)',
+                1 => '**'
+            )
+        );
         if (count($versionsArray) > 0) {
             foreach ($versionsArray as $versionNumber) {
                 $optionList[] = array(0 => $versionNumber,  1 => $versionNumber);
