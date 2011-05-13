@@ -60,12 +60,6 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
      */
     protected $extConf = null;
 
-    /**
-     * Error message to display
-     * @var string
-     */
-    protected $errorMsg = null;
-
 
 
     /**
