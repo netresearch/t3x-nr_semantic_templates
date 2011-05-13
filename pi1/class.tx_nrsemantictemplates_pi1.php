@@ -51,7 +51,7 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
     /**
      * Enable caching
      */
-    public $pi_checkCHash = true;
+    public $pi_checkCHash = false;
 
     /**
      * System-wide extension configuration
@@ -60,6 +60,29 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
      */
     protected $extConf = null;
 
+    /**
+     * Cache for LESS-rendered HTML content
+     *
+     * @var t3lib_cache_frontend_StringFrontend
+     */
+    protected $cache = null;
+
+    /**
+     * How long files shall be cached, in seconds
+     *
+     * @var integer
+     */
+    protected $cacheLifeTime = 86400;
+
+
+
+    /**
+     * Initializes the cache
+     */
+    public function __construct()
+    {
+        $this->initCache();
+    }
 
 
     /**
@@ -74,7 +97,30 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
      */
     public function main($content, $conf)
     {
+        $this->pi_USER_INT_obj = 1;
         $this->conf = $conf;
+
+        $cacheId = sha1(
+            $this->cObj->data['pi_flexform']
+            . $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
+        );
+        $content = $this->cache->get($cacheId);
+        if ($content === false) {
+            $content = $this->render();
+            $this->cache->set($cacheId, $content, array(), $this->cacheLifeTime);
+        }
+        return $this->pi_wrapInBaseClass($content);
+    }
+
+
+
+    /**
+     * Renders the template and returns it
+     *
+     * @return string HTML content to display
+     */
+    protected function render()
+    {
         $this->pi_setPiVarDefaults();
         $this->pi_initPIflexForm();
         $this->extConf = unserialize(
@@ -121,7 +167,8 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
                 . '</div>';
         }
         $returnValue .= $content;
-        return $this->pi_wrapInBaseClass($returnValue);
+
+        return $returnValue;
     }
 
 
@@ -277,7 +324,31 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         return $strDefault;
     }
 
-} // -- class tx_nrsemantictemplates_pi1
+
+
+    /**
+     * Initializes the cache instance
+     *
+     * @return void
+     */
+    protected function initCache()
+    {
+        t3lib_cache::initializeCachingFramework();
+        try {
+            $this->cache = $GLOBALS['typo3CacheManager']->getCache(
+                'cache_nrsemantictemplates_html'
+            );
+        } catch (Exception $e) {
+            $conf = $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']
+                ['cacheConfigurations']['cache_nrsemantictemplates_html'];
+            $this->cache = $GLOBALS['typo3CacheFactory']->create(
+                'cache_nrsemantictemplates_html',
+                $conf['frontend'], $conf['backend'], $conf['options']
+            );
+        }
+    }
+
+}
 
 
 // make sure class in included
