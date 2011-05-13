@@ -1,3 +1,14 @@
+2011-05-13 Christian Weiske <christian.weiske@netresearch.de>
+* Major refactoring and improvements
+* Better and prettier debugging
+* System wide LESS URL configuration
+* Caching
+* Ability to use the latest version of a template
+* Context sensitive help
+* Wizard icon
+* Documentation added
+* Version 0.3.0
+
 2010-01-29 Christian Weiske <christian.weiske@netresearch.de>
 * Fix some bugs
 * Version 0.2.0
