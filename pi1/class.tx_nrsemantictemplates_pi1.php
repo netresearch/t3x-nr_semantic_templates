@@ -100,12 +100,16 @@ class tx_nrsemantictemplates_pi1 extends tslib_pibase
         $this->pi_USER_INT_obj = 1;
         $this->conf = $conf;
 
+        //no cache when logged into backend or no_cache parameter set
+        $useCache = $GLOBALS['BE_USER']->user == null
+            && !isset($_REQUEST['no_cache']);
         $cacheId = sha1(
             $this->cObj->data['pi_flexform']
             . $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]
         );
+
         $content = $this->cache->get($cacheId);
-        if ($content === false) {
+        if ($content === false || !$useCache) {
             $content = $this->render();
             $this->cache->set($cacheId, $content, array(), $this->cacheLifeTime);
         }
