@@ -131,8 +131,17 @@ class tx_nrsemantictemplates_webservice
             $optionList[] = array(0 => $currentTemplate->name,  1 => $value);
         } // -- foreach template in array
 
-        $config['items'] = array_merge($config['items'], $optionList);
-        sort($config['items']);
+        $hint = array();
+        if ($oldTemplateValue === null) {
+            $hint = array(
+                array(0 => '* please select one *', 1 => null)
+            );
+        }
+        $config['items'] = array_merge(
+            $hint,
+            $config['items'],
+            $optionList
+        );
         return $config;
     }
 

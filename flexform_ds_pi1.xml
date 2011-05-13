@@ -26,6 +26,7 @@
         <templateVersion>
           <TCEforms>
            <label>LLL:EXT:nr_semantic_templates/locallang_db.xml:tt_content.pi_semantictemplates.template_versions</label>
+           <displayCond>FIELD:templateId:REQ:true</displayCond>
            <config>
             <type>select</type>
              <itemsProcFunc>tx_nrsemantictemplates_webservice->getTemplateVersions</itemsProcFunc>
@@ -53,7 +54,7 @@
             <type>input</type>
             <size>30</size>
           </config>
-          <displayCond>FIELD:templateId:&lt;:t</displayCond>
+          <displayCond>FIELD:templateId:-:r-t</displayCond>
          </TCEforms>
         </sparqlEndpoint>
 
@@ -65,7 +66,7 @@
             <cols>40</cols>
             <rows>10</rows>
           </config>
-          <displayCond>FIELD:templateId:&lt;:t</displayCond>
+          <displayCond>FIELD:templateId:-:r-t</displayCond>
          </TCEforms>
         </sparqlQuery>
 
