@@ -1,4 +1,4 @@
 # cat=basic/links; type=string; label=Default LESS instance URL
-lessUrl = 
+lessUrl = http://less.aksw.org/
 # cat=basic/links; type=string; label=Default SPARQL endpoint URL
 sparqlEndpoint =
