@@ -1,5 +1,6 @@
+*********************
 nr_semantic_templates
-=====================
+*********************
 The “Semantic Templates” extension displays HTML templates from
 a LESS installation in TYPO3 pages.
 
@@ -19,12 +20,12 @@ FOAF profiles of people are a good example for RDF data.
 
 
 Documentation
--------------
-See doc/manual.pdf and doc/manual.sxw
+=============
+See ``doc/manual.pdf`` and ``doc/manual.sxw``
 
 
 Links
------
+=====
 Extension project page on TYPO3 forge
   http://forge.typo3.org/projects/extension-nr_semantic_templates
 
