@@ -28,9 +28,11 @@ Links
 Extension project page on TYPO3 forge
   http://forge.typo3.org/projects/extension-nr_semantic_templates
 
+Source code
+  https://github.com/netresearch/t3x-nr_semantic_templates
+
 LESS project page on sourceforge
   https://sourceforge.net/projects/less-st/
 
 LESS demo installation
   http://less.aksw.org/
-
